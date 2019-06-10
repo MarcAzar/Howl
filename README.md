@@ -52,4 +52,4 @@ information along with the enrypted message needed for the decryption
 algorithm.
 
 ## Documentation
-Documentation can be found <a class="external reference" href="https://marcazar.github.io/Howl/docs/howl.html">Automata</a>
+Documentation can be found <a class="external reference" href="https://marcazar.github.io/Howl/docs/howl.html">Howl</a>
