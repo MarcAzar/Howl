@@ -9,7 +9,7 @@ ready for such problems".
 ```
     import automata
 
-    let encryptCode = generateRule[uint8]()
+    let encryptCode = generateRule[uint8]() # this will generate Rule 30 of WolfCode, check src for details
     assert encryptCode == 30 # Rule 30 automata
     let encryptRule = wolfCode[uint8](encryptCode)
  
