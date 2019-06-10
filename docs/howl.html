@@ -16,7 +16,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>automata</title>
+<title>howl</title>
 <style type="text/css" >
 /*
 Stylesheet for use with Docutils/rst2html.
@@ -1219,7 +1219,7 @@ function main() {
 <body onload="main()">
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">automata</h1>
+    <h1 class="title">howl</h1>
     <div class="row">
   <div class="three columns">
   <div id="global-links">
@@ -1273,8 +1273,8 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
-  <p class="module-desc">Copyright (C) Marc Azar. All rights reserved.<blockquote><p>Second order Automata used for cryptography.
-<h1><a class="toc-backref" id="usage" href="#usage">Usage</a></h1><blockquote><p><pre>import automata
+  <p class="module-desc">Copyright (C) Marc Azar. All rights reserved.<blockquote><p>Second Order Cellular Automaton for Cryptography.
+<h1><a class="toc-backref" id="usage" href="#usage">Usage</a></h1><blockquote><p><pre>import howl
 
 let encryptCode = generateRule[uint8]()
 assert encryptCode == 30 # Rule 30 automata
@@ -1305,7 +1305,7 @@ for i in 0 ..&lt; iterations: # we will iterate the same amount as above
   previous = temp
 echo &quot;Decrypted message is: &quot;, print(message)
  
- assert message[0 .. 7] == original[0 .. 7] # Yay it works!</pre>
+ assert message == original # Yay it works!</pre>
 </p></blockquote>
 </p></blockquote>
 </p>
@@ -1320,13 +1320,13 @@ echo &quot;Decrypted message is: &quot;, print(message)
 <a id="encrypt,BitVector,BitVector,BitVector"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">encrypt</span><span class="Other">(</span><span class="Identifier">message</span><span class="Other">,</span> <span class="Identifier">temp</span><span class="Other">,</span> <span class="Identifier">previous</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="bitvector.html#BitVector"><span class="Identifier">BitVector</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-This encrypts our message relying on previous state and places it in <cite>temp</cite> to be used as the new input message int he next iteration. The last and first states are not padded, and rely on their right only, and left only neighbours respectively. If you add more states, you should increase the mod accordingly. The loop can be run in parallel using <cite>||</cite>, replace with <cite>..</cite> if you do not want to compile with -d:openmp option, you can also use <cite>spawn</cite> instead, or go concurrent with <cite>async</cite>. 
+This encrypts our message relying on previous state and places it in temp to be used as the new input message in the next iteration. The last and first states are not padded, and rely on their right only, and left only neighbours respectively. If you add more states, you should increase the Mod accordingly. The loop can be run in parallel using || instead of .. if you do not want to compile with -d:openmp option, you can also use spawn instead, or go concurrent with async. 
 
 </dd>
 <a id="decrypt,BitVector,BitVector,BitVector"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">decrypt</span><span class="Other">(</span><span class="Identifier">message</span><span class="Other">,</span> <span class="Identifier">temp</span><span class="Other">,</span> <span class="Identifier">previous</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="bitvector.html#BitVector"><span class="Identifier">BitVector</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-This decrypts our message provided the previous state is also available, the result is placed in <cite>temp</cite> to be used as our new input message to decrypt in the next iteration. If you add more states, you should increase the mod accordingly. The first and last states have their own special rules, see above. The loop can be run in parallel using <cite>||</cite>, replace with <cite>..</cite> if you do not want to compile with -d:openmp option, you can also use <cite>spawn</cite> instead, or go concurrent with <cite>async</cite>. 
+This decrypts our message provided the previous state is also available, the result is placed in <cite>temp</cite> to be used as our new input message to decrypt in the next iteration. If you add more states, you should increase the mod accordingly. The first and last states have their own special rules, see above. The loop can be run in parallel using || instead of .. if you do not want to compile with -d:openmp option, you can also use spawn instead, or go concurrent with async. 
 
 </dd>
 
@@ -1343,7 +1343,9 @@ Lets provide a function to print out our bitVector in an array like fashion. The
 <a id="generateRule,"></a>
 <dt><pre><span class="Keyword">func</span> <span class="Identifier">generateRule</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
 <dd>
-We can use this template to generate any mapping (injective or not) to calculate the next state <cite>A(t+1)</cite> from the three neighbouring states at <cite>t</cite>. You can add more states, more neighbours, and rely on any mapping, since we will turn this into a second order automata to ensure it will be reversible. This below represents WolfCode number 30. This will be run only once at compile time or in initialization, and results in a bitVector that contains all possible permutations for a speedy random access lookup. 
+<p>We can use this template to generate any mapping (injective or not) to calculate the next state A(t+1) from the three neighbouring states at</p>
+<p>t. You can add more states, more neighbours, and rely on any mapping, since we will turn this into a second order automata to ensure it will be reversible. This below represents WolfCode number 30. This will be run only once at compile time or during initialization, and results in a bitVector that contains all possible permutations for a speedy random access lookup. </p>
+
 
 </dd>
 <a id="wolfCode,Natural"></a>
@@ -1362,7 +1364,7 @@ If you already know the code number of your rule, you can use it here to transfo
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-06-10 16:46:26 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-10 19:01:05 UTC</small>
       </div>
     </div>
   </div>
