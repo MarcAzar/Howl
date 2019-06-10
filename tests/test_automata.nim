@@ -29,4 +29,4 @@ for i in 0 ..< iterations: # we will iterate the same amount as above
   previous = temp
 echo "Decrypted message is: ", print(message)
 
-assert message[0 .. 7] == original[0 .. 7] # Yay it works!
+assert message == original # Yay it works!
