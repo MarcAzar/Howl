@@ -38,7 +38,7 @@ ready for such problems".
       previous = temp
     echo "Decrypted message is: ", print(message)
  
-     assert message[0 .. 7] == original[0 .. 7] # Yay it works!
+     assert message == original # Yay it works!
 ```
 ## The Idea Behind Using the Automata for Cryptography
 One can easily pick up any elementary cellular automaton set of rules for any
