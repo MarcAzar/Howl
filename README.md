@@ -7,7 +7,7 @@ generate sequences that in the words of Collatz Lothar "Mathematics may not be
 ready for such problems".
 ## Example Usage                                                        
 ```
-    import automata
+    import howl
 
     let encryptCode = generateRule[uint8]() # this will generate Rule 30 of WolfCode, check src for details
     assert encryptCode == 30 # Rule 30 automata
