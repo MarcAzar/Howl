@@ -1,12 +1,12 @@
 ## Copyright (C) Marc Azar. All rights reserved.
 # MIT License. Look at LICENSE.txt for more info
 ##
-## Second order Automata used for cryptography.
+## Second Order Cellular Automaton for Cryptography.
 ##
 ## Usage
 ## --------------
 ##  ::
-##    import automata
+##    import howl
 ##
 ##    let encryptCode = generateRule[uint8]()
 ##    assert encryptCode == 30 # Rule 30 automata
@@ -64,11 +64,11 @@ func incMod(x, y, N: int): int {.inline.} =
 
 func generateRule*[T](): T =
   ## We can use this template to generate any mapping (injective or not) to
-  ## calculate the next state `A(t+1)` from the three neighbouring states at
-  ## `t`. You can add more states, more neighbours, and rely on any mapping,
+  ## calculate the next state A(t+1) from the three neighbouring states at
+  ## t. You can add more states, more neighbours, and rely on any mapping,
   ## since we will turn this into a second order automata to ensure it will be
   ## reversible. This below represents WolfCode number 30. This will be run
-  ## only once at compile time or in initialization, and results in a bitVector
+  ## only once at compile time or during initialization, and results in a bitVector
   ## that contains all possible permutations for a speedy random access lookup.
   ##
   let
@@ -95,12 +95,12 @@ func wolfCode*[T](x: Natural): BitVector[T] =
 
 proc encrypt*(message, temp, previous: var BitVector) {.inline.} =
   ## This encrypts our message relying on previous state and places it in
-  ## `temp` to be used as the new input message int he next iteration.
+  ## temp to be used as the new input message in the next iteration.
   ## The last and first states are not padded, and rely on their right only,
   ## and left only neighbours respectively. If you add more states, you should
-  ## increase the mod accordingly. The loop can be run in parallel using `||`,
-  ## replace with `..` if you do not want to compile with -d:openmp option, you
-  ## can also use `spawn` instead, or go concurrent with `async`.
+  ## increase the Mod accordingly. The loop can be run in parallel using ||
+  ## instead of .. if you do not want to compile with -d:openmp option, you
+  ## can also use spawn instead, or go concurrent with async.
   ##
   let length = message.cap - 1
   temp[0] = incMod(encryptRule[message[0 .. 2].int], previous[0], 2)
@@ -114,9 +114,9 @@ proc decrypt*(message, temp, previous: var BitVector) {.inline.} =
   ## the result is placed in `temp` to be used as our new input message to
   ## decrypt in the next iteration. If you add more states, you should increase
   ## the mod accordingly. The first and last states have their own special
-  ## rules, see above. The loop can be run in parallel using `||`,
-  ## replace with `..` if you do not want to compile with -d:openmp option, you
-  ## can also use `spawn` instead, or go concurrent with `async`.
+  ## rules, see above. The loop can be run in parallel using || instead of
+  ## .. if you do not want to compile with -d:openmp option, you
+  ## can also use spawn instead, or go concurrent with async.
   ##
   let length = message.cap - 1
   temp[0] = incMod(encryptRule[previous[0 .. 2].int], message[0], 2)
