@@ -1,4 +1,4 @@
-# BitVector
+# Automaton
 A second order Automata for cryptography. This creates a reversible second order automata based on any elementary cellular automata following Edward Fredkin's method  <a class="external reference" href="https://en.wikipedia.org/wiki/Second-order_cellular_automaton">Second-order cellular automaton</a>. The automaton is used for encrypting and decrypting bit chunks as demonstrated by Zhenchuan Chai in "Encryption Based on Reversible Second-Order Cellular Automata" <a class="external reference" href="http://dx.doi.org/10.1007/11576259_39">Encryption Based on Reversible Second-Order Cellular Automata</a>.
 The merits of this method in cryptography is that it can be a very low energy
 way of encrypting/decrypting data, since the process is reversible making it a
