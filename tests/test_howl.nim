@@ -1,4 +1,4 @@
-import automata, bitvector
+import howl, bitvector
 
 let encryptCode = generateRule[uint8]()
 assert encryptCode == 30 # Rule 30 automata
